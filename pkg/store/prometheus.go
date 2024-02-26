@@ -12,6 +12,7 @@ import (
 	"net/http"
 	"net/url"
 	"path"
+	"slices"
 	"sort"
 	"strings"
 	"sync"
@@ -611,6 +612,7 @@ func (p *PrometheusStore) LabelNames(ctx context.Context, r *storepb.LabelNamesR
 			lbls = append(lbls, l.Name)
 		})
 		sort.Strings(lbls)
+		lbls = slices.Compact(lbls)
 	}
 
 	return &storepb.LabelNamesResponse{Names: lbls}, nil
